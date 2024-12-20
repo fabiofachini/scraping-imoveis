@@ -9,18 +9,18 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from datetime import datetime
+import os
 
-# Lista de User-Agents para rotação
-user_agents = [
+def escolher_agente_aleatoriamente():
+    # Lista de User-Agents para rotação
+    user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
-]
-
-def escolher_agente_aleatoriamente():
+    ]
     return random.choice(user_agents)
 
 def criar_drive():
@@ -49,7 +49,7 @@ def scroll_para_cima_e_para_baixo(driver):
             break
         posicao_atual = posicao_nova
 
-def scraping(driver, categoria, data_list):
+def scraping(driver, categoria, tipo, data_list):
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -71,6 +71,7 @@ def scraping(driver, categoria, data_list):
             'endereco': imovel.select_one('p.l-text.l-u-color-neutral-28.l-text--variant-body-small.l-text--weight-regular.truncate[data-cy="rp-cardProperty-street-txt"]').get_text(strip=True) if imovel.select_one('p.l-text.l-u-color-neutral-28.l-text--variant-body-small.l-text--weight-regular.truncate[data-cy="rp-cardProperty-street-txt"]') else None,
             'link': imovel.select_one('a.ListingCard_result-card__Pumtx')['href'] if imovel.select_one('a.ListingCard_result-card__Pumtx') else None,
             'categoria': categoria,
+            'tipo': tipo,
             'timestamp': timestamp
         }
         data_list.append(data)
@@ -82,10 +83,15 @@ def trocar_pagina(driver):
     print("Cliquei na próxima página!")
     time.sleep(5)
 
-def exportar_csv(data_list, categoria):
-    csv_file = f"{categoria}.csv"
+def exportar_csv(data_list, categoria, tipo, cidade):
+    pasta = "2 - csv"
+    
+    csv_file = os.path.join(pasta, f"{categoria}_{tipo}_{cidade}.csv")
+    
+    # Criação do arquivo CSV
     with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=['titulo', 'valor', 'metragem', 'quartos', 'banheiros', 'vagas', 'endereco', 'link', 'categoria', 'timestamp'])
+        writer = csv.DictWriter(file, fieldnames=['titulo', 'valor', 'metragem', 'quartos', 'banheiros', 'vagas', 'endereco', 'link', 'categoria','tipo', 'timestamp'])
         writer.writeheader()
         writer.writerows(data_list)
+    
     print(f"Dados salvos no arquivo {csv_file}")

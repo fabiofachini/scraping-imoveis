@@ -4,7 +4,9 @@ if __name__ == "__main__":
     driver = criar_drive()
     data_list = []
 
-    categoria = 'apartamento'
+    categoria = 'venda'
+    tipo = 'apartamento'
+    cidade = 'florianopolis'
     url = "https://www.zapimoveis.com.br/venda/apartamentos/sc+florianopolis++cacupe/"
     
     driver.get(url)
@@ -12,7 +14,7 @@ if __name__ == "__main__":
     while True:
         try:
             scroll_para_cima_e_para_baixo(driver)
-            scraping(driver, categoria, data_list)
+            scraping(driver, categoria, tipo, data_list)
             trocar_pagina(driver)
 
         except Exception as e:
@@ -20,4 +22,5 @@ if __name__ == "__main__":
             break
 
     driver.quit()
-    exportar_csv(data_list, categoria)
+    
+    exportar_csv(data_list, categoria, tipo, cidade)
