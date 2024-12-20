@@ -4,10 +4,10 @@ if __name__ == "__main__":
     driver = criar_drive()
     data_list = []
 
-    categoria = 'venda'
+    categoria = 'aluguel'
     tipo = 'apartamento'
     cidade = 'florianopolis'
-    url = "https://www.zapimoveis.com.br/venda/apartamentos/sc+florianopolis++sta-monica/"
+    url = "https://www.zapimoveis.com.br/aluguel/apartamentos/sc+florianopolis++jurere-internacional/"
     
     driver.get(url)
 
