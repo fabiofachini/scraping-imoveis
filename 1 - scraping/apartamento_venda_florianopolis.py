@@ -1,4 +1,4 @@
-from functions import criar_drive, scroll_para_cima_e_para_baixo, scraping, trocar_pagina, exportar_csv
+from functions import criar_drive, scroll_para_cima_e_para_baixo, scraping, trocar_pagina, exportar_csv, aceitar_cookie
 
 if __name__ == "__main__":
     driver = criar_drive()
@@ -7,10 +7,10 @@ if __name__ == "__main__":
     categoria = 'venda'
     tipo = 'apartamento'
     cidade = 'florianopolis'
-    url = "https://www.zapimoveis.com.br/venda/apartamentos/sc+florianopolis++sta-monica/"
+    url = "https://www.zapimoveis.com.br/venda/apartamentos/sc+florianopolis/?__ab=exp-aa-test:control,propposv3:control,rentsale:test,pos-zap:new,zapproppos:a&transacao=venda&onde=,Santa%20Catarina,Florian%C3%B3polis,,,,,city,BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis,-27.594804,-48.556929,&tipos=apartamento_residencial,studio_residencial,kitnet_residencial,cobertura_residencial,flat_residencial,loft_residencial&pagina=1"
     
     driver.get(url)
-
+    aceitar_cookie(driver)
     while True:
         try:
             scroll_para_cima_e_para_baixo(driver)
