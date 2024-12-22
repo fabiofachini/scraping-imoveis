@@ -95,3 +95,16 @@ def exportar_csv(data_list, categoria, tipo, cidade):
         writer.writerows(data_list)
     
     print(f"Dados salvos no arquivo {csv_file}")
+
+def aceitar_cookie(driver):
+    """
+    Função para clicar no botão de aceitar cookies.
+    :param driver: Instância do Selenium WebDriver
+    """
+    try:
+        botao_aceitar = driver.find_element(By.XPATH, "//*[@id='adopt-accept-all-button']")
+        botao_aceitar.click()
+        print("Cliquei no botão de aceitar cookies!")
+        time.sleep(5)
+    except Exception as e:
+        print(f"Erro ao clicar no botão de aceitar cookies: {e}")
