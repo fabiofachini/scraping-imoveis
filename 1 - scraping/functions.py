@@ -28,15 +28,16 @@ def criar_drive():
     user_agent = escolher_agente_aleatoriamente()
     chrome_options.add_argument(f"user-agent={user_agent}")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    driver.maximize_window()
     return driver
 
 def scroll_para_cima_e_para_baixo(driver):
-    scroll_tempo_pausa = 0.7
+    scroll_tempo_pausa = 0.9
 
     # Rolar até o topo
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL + Keys.HOME)
     time.sleep(scroll_tempo_pausa)
-
+    time.sleep(5)
     # Rolar até o final
     posicao_atual = 0
     posicao_nova = None
@@ -79,9 +80,9 @@ def scraping(driver, categoria, tipo, data_list):
 
 def trocar_pagina(driver):
     botao_proxima = driver.find_element(By.XPATH, "//*[@id='__next']/main/section/div/form/div[2]/div[4]/div[1]/div/section/nav/button[2]")
+    driver.execute_script("arguments[0].scrollIntoView(true);", botao_proxima)
     botao_proxima.click()
     print("Cliquei na próxima página!")
-    time.sleep(5)
 
 def exportar_csv(data_list, categoria, tipo, cidade):
     pasta = "2 - csv"
@@ -97,14 +98,7 @@ def exportar_csv(data_list, categoria, tipo, cidade):
     print(f"Dados salvos no arquivo {csv_file}")
 
 def aceitar_cookie(driver):
-    """
-    Função para clicar no botão de aceitar cookies.
-    :param driver: Instância do Selenium WebDriver
-    """
-    try:
-        botao_aceitar = driver.find_element(By.XPATH, "//*[@id='adopt-accept-all-button']")
-        botao_aceitar.click()
-        print("Cliquei no botão de aceitar cookies!")
-        time.sleep(5)
-    except Exception as e:
-        print(f"Erro ao clicar no botão de aceitar cookies: {e}")
+    time.sleep(2)
+    botao_aceitar = driver.find_element(By.XPATH, "//*[@id='adopt-accept-all-button']")
+    botao_aceitar.click()
+    print("Cliquei no botão de aceitar cookies!")
