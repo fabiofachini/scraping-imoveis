@@ -1,4 +1,4 @@
-from functions import criar_drive, scroll_para_cima_e_para_baixo, scraping, trocar_pagina, exportar_csv, aceitar_cookie
+from functions import criar_drive, scroll_para_cima_e_para_baixo, scraping, trocar_pagina, exportar_csv, aceitar_cookie, verificar_botao_proxima_pagina
 import time
 
 if __name__ == "__main__":
@@ -16,8 +16,18 @@ if __name__ == "__main__":
     
     while True:
         try:
+            # Realiza scroll na página
             scroll_para_cima_e_para_baixo(driver)
+            
+            # Verifica se o botão de próxima página está presente
+            if not verificar_botao_proxima_pagina(driver):
+                print("Botão de próxima página não encontrado. Repetindo o scroll...")
+                scroll_para_cima_e_para_baixo(driver)  # Roda o scroll novamente
+            
+            # Realiza o scraping dos dados
             scraping(driver, categoria, tipo, data_list)
+            
+            # Troca para a próxima página
             trocar_pagina(driver)
 
         except Exception as e:

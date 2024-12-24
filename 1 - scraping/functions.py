@@ -32,7 +32,7 @@ def criar_drive():
     return driver
 
 def scroll_para_cima_e_para_baixo(driver):
-    scroll_tempo_pausa = 0.9
+    scroll_tempo_pausa = 2
 
     # Rolar até o topo
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL + Keys.HOME)
@@ -98,7 +98,13 @@ def exportar_csv(data_list, categoria, tipo, cidade):
     print(f"Dados salvos no arquivo {csv_file}")
 
 def aceitar_cookie(driver):
-    time.sleep(2)
     botao_aceitar = driver.find_element(By.XPATH, "//*[@id='adopt-accept-all-button']")
     botao_aceitar.click()
     print("Cliquei no botão de aceitar cookies!")
+
+def verificar_botao_proxima_pagina(driver):
+    try:
+        driver.find_element(By.XPATH, "//*[@id='__next']/main/section/div/form/div[2]/div[4]/div[1]/div/section/nav/button[2']")
+        return True
+    except Exception:
+        return False
