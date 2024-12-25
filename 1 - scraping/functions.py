@@ -82,7 +82,7 @@ def trocar_pagina(driver):
     botao_proxima = driver.find_element(By.XPATH, "//*[@id='__next']/main/section/div/form/div[2]/div[4]/div[1]/div/section/nav/button[2]")
     driver.execute_script("arguments[0].scrollIntoView(true);", botao_proxima)
     botao_proxima.click()
-    print("Cliquei na próxima página!")
+    print("Clique no botão próxima página!")
 
 def exportar_csv(data_list, categoria, tipo, cidade):
     pasta = "2 - csv"
@@ -100,11 +100,14 @@ def exportar_csv(data_list, categoria, tipo, cidade):
 def aceitar_cookie(driver):
     botao_aceitar = driver.find_element(By.XPATH, "//*[@id='adopt-accept-all-button']")
     botao_aceitar.click()
-    print("Cliquei no botão de aceitar cookies!")
+    print("Clique no botão de aceitar cookies!")
 
 def verificar_botao_proxima_pagina(driver):
     try:
-        driver.find_element(By.XPATH, "//*[@id='__next']/main/section/div/form/div[2]/div[4]/div[1]/div/section/nav/button[2']")
+        botao_identificar = driver.find_element(By.XPATH, "//*[@id='__next']/main/section/div/form/div[2]/div[4]/div[1]/div/section/nav/button[2]")
+        driver.execute_script("arguments[0].scrollIntoView(true);", botao_identificar)
+        print("Botão identificado")
         return True
     except Exception:
+        print("Botão não identificado")
         return False

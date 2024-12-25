@@ -16,13 +16,17 @@ if __name__ == "__main__":
     
     while True:
         try:
-            # Realiza scroll na página
-            scroll_para_cima_e_para_baixo(driver)
-            
-            # Verifica se o botão de próxima página está presente
-            if not verificar_botao_proxima_pagina(driver):
-                print("Botão de próxima página não encontrado. Repetindo o scroll...")
-                scroll_para_cima_e_para_baixo(driver)  # Roda o scroll novamente
+            # Realiza até 3 tentativas de scroll
+            for attempt in range(3):
+                scroll_para_cima_e_para_baixo(driver)
+                
+                if verificar_botao_proxima_pagina(driver):
+                    break  # Sai do loop se o botão for encontrado
+                
+                if attempt < 2:
+                    print(f"Tentativa {attempt + 1} de encontrar o botão de próxima página falhou. Tentando novamente...")
+                else:
+                    print("Todas as tentativas de scroll falharam. Prosseguindo para scraping...")
             
             # Realiza o scraping dos dados
             scraping(driver, categoria, tipo, data_list)
