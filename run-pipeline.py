@@ -6,16 +6,16 @@ pasta_scraping = "1 - scraping"
 
 # Lista de arquivos Python na ordem desejada
 arquivos_scraping = [
-    "fpolis_apartamento_aluguel.py",
-    "fpolis_apartamento_venda_1quarto.py",
-    "fpolis_apartamento_venda_2quartos.py",
-    "fpolis_apartamento_venda_3quartos_12banheiros.py",
-    "fpolis_apartamento_venda_3quartos_34banheiros.py",
-    "fpolis_apartamento_venda_4quartos.py",
-    "fpolis_casa_aluguel.py",
-    "fpolis_casa_venda_4quartos.py",
-    "fpolis_casa_venda_123quartos.py",
-    "fpolis_terreno_venda.py",
+    "fpolis_aluguel_apartamento.py",
+    "fpolis_aluguel_casa.py",
+    "fpolis_venda_apartamento_1quarto.py",
+    "fpolis_venda_apartamento_2quartos.py",
+    "fpolis_venda_apartamento_3quartos_12banheiros.py",
+    "fpolis_venda_apartamento_3quartos_34banheiros.py",
+    "fpolis_venda_apartamento_4quartos.py",
+    "fpolis_venda_casa_4quartos.py",
+    "fpolis_venda_casa_123quartos.py",
+    "fpolis_venda_terreno.py",
 ]
 
 # Função para executar os scripts de scraping

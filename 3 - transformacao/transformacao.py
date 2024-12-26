@@ -1,19 +1,35 @@
 import pandas as pd
 import os
 
+# Lista de arquivos CSV
+arquivos_scraping = [
+    "fpolis_aluguel_apartamento_tudo.csv",
+    "fpolis_venda_apartamento_1quarto.csv",
+    "fpolis_venda_apartamento_2quartos.csv",
+    "fpolis_venda_apartamento_3quartos_12banheiros.csv",
+    "fpolis_venda_apartamento_3quartos_34banheiros.csv",
+    "fpolis_venda_apartamento_4quartos.csv",
+    "fpolis_aluguel_casa_tudo.csv",
+    "fpolis_venda_casa_4quartos.csv",
+    "fpolis_venda_casa_123quartos.csv",
+    "fpolis_venda_terreno_tudo.csv",
+]
+
 # Caminho da pasta com os arquivos CSV
 pasta_csv = "2 - csv"
 
-# Leitura dos arquivos na pasta
-arquivo1 = os.path.join(pasta_csv, "aluguel_apartamento_florianopolis.csv")
-arquivo2 = os.path.join(pasta_csv, "venda_apartamento_florianopolis.csv")
+# Leitura e combinação dos arquivos em um único DataFrame
+dataframes = []
+for arquivo in arquivos_scraping:
+    caminho_arquivo = os.path.join(pasta_csv, arquivo)
+    if os.path.exists(caminho_arquivo):  # Verificar se o arquivo existe
+        df_temp = pd.read_csv(caminho_arquivo)
+        dataframes.append(df_temp)
+    else:
+        print(f"Arquivo não encontrado: {caminho_arquivo}")
 
-# Leitura dos dois DataFrames
-df1 = pd.read_csv(arquivo1)
-df2 = pd.read_csv(arquivo2)
-
-# Combinar as duas tabelas
-df = pd.concat([df1, df2], ignore_index=True)
+# Concatenar os DataFrames
+df = pd.concat(dataframes, ignore_index=True)
 
 # Separar a coluna "titulo" em "bairro" e "cidade"
 df[['bairro', 'cidade']] = df['titulo'].str.split(', ', expand=True)
@@ -26,27 +42,38 @@ df['valor'] = df['valor'].str.replace('.', '', regex=False)  # Remover separador
 df['valor'] = df['valor'].str.replace(',', '.', regex=False)  # Substituir vírgula por ponto
 df['valor'] = df['valor'].str.extract(r'(\d+\.?\d*)').astype(float)  # Converter para float
 
-# 1. Remover o "m²" da coluna `metragem`
+# Remover o "m²" da coluna `metragem`
 df['metragem'] = df['metragem'].str.replace(' m²', '', regex=False)
 
-# 2. Extrair o maior valor de colunas com valores separados por traço
+# Extrair o maior valor de colunas com valores separados por traço
 for coluna in ['metragem', 'quartos', 'banheiros', 'vagas']:
-    # Garantir que a coluna tenha valores como strings
-    df[coluna] = df[coluna].astype(str)  # Convertendo para string
-    df[coluna] = df[coluna].str.split('-').apply(lambda x: max([float(i) for i in x]) if isinstance(x, list) else float(x))
+    df[coluna] = df[coluna].astype(str).str.split('-').apply(
+        lambda x: max([float(i) for i in x]) if isinstance(x, list) else float(x)
+    )
 
-# 3. Remover o ponto na coluna `vagas` (convertendo para inteiro)
-df['vagas'] = df['vagas'].fillna(0)
-df['vagas'] = df['vagas'].astype(float).astype(int)  # Primeiro converte para float, depois para int
-df['valor'] = df['valor'].astype(int)
-df['metragem'] = df['metragem'].astype(int)
-df['quartos'] = df['quartos'].astype(int)
-df['banheiros'] = df['banheiros'].astype(int)
+# Processar e converter tipos de colunas
+df['vagas'] = df['vagas'].fillna(0).astype(float).astype(int)
+df['valor'] = df['valor'].fillna(0).astype(int)
+df['metragem'] = df['metragem'].fillna(0).astype(int)
+df['quartos'] = df['quartos'].fillna(0).astype(int)
+df['banheiros'] = df['banheiros'].fillna(0).astype(int)
 
-# Remover duplicatas (linhas que são exatamente iguais em todas as colunas)
-df = df.drop_duplicates()
+# Remover duplicatas
+df = df.drop_duplicates(subset=[
+    'categoria', 'tipo', 'bairro', 'cidade', 'endereco', 'valor', 
+    'dia/mes', 'metragem', 'quartos', 'banheiros', 'vagas', 'link'
+])
 
-df = df[['categoria', 'tipo', 'bairro', 'cidade', 'endereco', 'valor', 'dia/mes', 'metragem', 'quartos', 'banheiros', 'vagas', 'link','timestamp']]
+# Preencher valores ausentes ou em branco na coluna "link"
+df['link'] = df['link'].fillna("Vários anúncios para o mesmo imóvel")
+df['link'] = df['link'].replace(r'^\s*$', "Vários anúncios para o mesmo imóvel", regex=True)
+
+# Reorganizar colunas
+colunas_final = [
+    'categoria', 'tipo', 'bairro', 'cidade', 'endereco', 'valor', 'dia/mes',
+    'metragem', 'quartos', 'banheiros', 'vagas', 'link', 'timestamp'
+]
+df = df[colunas_final]
 
 # Salvar o DataFrame transformado em um novo CSV
 df.to_csv("tabela_transformada.csv", index=False)
