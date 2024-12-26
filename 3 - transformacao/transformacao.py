@@ -5,13 +5,15 @@ import os
 arquivos_scraping = [
     "fpolis_aluguel_apartamento_tudo.csv",
     "fpolis_venda_apartamento_1quarto.csv",
-    "fpolis_venda_apartamento_2quartos.csv",
+    "fpolis_venda_apartamento_2quartos_2banheiros.csv",
+    "fpolis_venda_apartamento_2quartos_134banheiros.csv",
     "fpolis_venda_apartamento_3quartos_12banheiros.csv",
     "fpolis_venda_apartamento_3quartos_34banheiros.csv",
+    "fpolis_venda_apartamento_3quartos.csv",
     "fpolis_venda_apartamento_4quartos.csv",
     "fpolis_aluguel_casa_tudo.csv",
     "fpolis_venda_casa_4quartos.csv",
-    "fpolis_venda_casa_123quartos.csv",
+    "fpolis_venda_casa_12quartos.csv",
     "fpolis_venda_terreno_tudo.csv",
 ]
 

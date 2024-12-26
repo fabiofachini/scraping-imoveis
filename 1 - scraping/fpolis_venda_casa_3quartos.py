@@ -13,8 +13,8 @@ if __name__ == "__main__":
     categoria = 'venda'
     tipo = 'casa'
     cidade = 'fpolis'
-    caracteristica = '123quartos'
-    url = "https://www.zapimoveis.com.br/venda/casas/sc+florianopolis/2-quartos/?__ab=exp-aa-test:control,propposv3:control,rentsale:test,pos-zap:new,zapproppos:a&transacao=venda&onde=,Santa%20Catarina,Florian%C3%B3polis,,,,,city,BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis,-27.594804,-48.556929,&tipos=casa_residencial,sobrado_residencial,condominio_residencial,casa-vila_residencial&pagina=1&quartos=2,1,3"
+    caracteristica = '3quartos'
+    url = "https://www.zapimoveis.com.br/venda/casas/sc+florianopolis/2-quartos/?__ab=exp-aa-test:control,propposv3:control,rentsale:test,pos-zap:new,zapproppos:a&transacao=venda&onde=,Santa%20Catarina,Florian%C3%B3polis,,,,,city,BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis,-27.594804,-48.556929,&tipos=casa_residencial,sobrado_residencial,condominio_residencial,casa-vila_residencial&pagina=1&quartos=3"
     
     driver.get(url)
     time.sleep(5)

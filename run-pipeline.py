@@ -9,12 +9,14 @@ arquivos_scraping = [
     "fpolis_aluguel_apartamento.py",
     "fpolis_aluguel_casa.py",
     "fpolis_venda_apartamento_1quarto.py",
-    "fpolis_venda_apartamento_2quartos.py",
+    "fpolis_venda_apartamento_2quartos_2banheiros.py",
+    "fpolis_venda_apartamento_2quartos_134banheiros.py",
     "fpolis_venda_apartamento_3quartos_12banheiros.py",
     "fpolis_venda_apartamento_3quartos_34banheiros.py",
     "fpolis_venda_apartamento_4quartos.py",
+    "fpolis_venda_casa_3quartos.py",
     "fpolis_venda_casa_4quartos.py",
-    "fpolis_venda_casa_123quartos.py",
+    "fpolis_venda_casa_12quartos.py",
     "fpolis_venda_terreno.py",
 ]
 
