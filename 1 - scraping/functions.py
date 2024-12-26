@@ -32,7 +32,7 @@ def criar_drive():
     return driver
 
 def scroll_para_cima_e_para_baixo(driver):
-    scroll_tempo_pausa = 2
+    scroll_tempo_pausa = 1
 
     # Rolar até o topo
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL + Keys.HOME)
@@ -84,10 +84,10 @@ def trocar_pagina(driver):
     botao_proxima.click()
     print("Clique no botão próxima página!")
 
-def exportar_csv(data_list, categoria, tipo, cidade):
+def exportar_csv(data_list, categoria, tipo, cidade, caracteristica):
     pasta = "2 - csv"
     
-    csv_file = os.path.join(pasta, f"{categoria}_{tipo}_{cidade}.csv")
+    csv_file = os.path.join(pasta, f"{cidade}_{categoria}_{tipo}_{caracteristica}.csv")
     
     # Criação do arquivo CSV
     with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
