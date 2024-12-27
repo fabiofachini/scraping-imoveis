@@ -19,8 +19,9 @@ params = urllib.parse.quote_plus(
 conn_str = f"mssql+pyodbc:///?odbc_connect={params}"
 engine = create_engine(conn_str)
 
-# Nome do arquivo CSV
-csv_file = "tabela_transformada.csv"
+# Caminho do arquivo CSV
+pasta_transformacao = "3 - transformacao"
+csv_file = os.path.join(pasta_transformacao, "tabela_transformada.csv")
 
 # Ler o arquivo CSV em um DataFrame
 try:
