@@ -113,6 +113,8 @@ try:
                     with col9:
                         st.metric("Mediana - Vagas", int(dados_filtrados["vagas"].median()))
 
+                    st.dataframe(dados_filtrados)
+                    
                     # Botão para exportar para CSV
                     st.subheader("Exportar dados para CSV")
                     st.download_button(
